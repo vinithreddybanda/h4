@@ -73,37 +73,33 @@ public class Calculator {
 1. **Install Jenkins plugins:** Git, Docker
 2. **Create a new Pipeline job**
 3. **Sample Jenkinsfile:**
-    ```groovy
+    ```
     pipeline {
-        agent any
-        stages {
-            stage('Clone') {
-                steps {
-                    git 'https://github.com/<your-username>/<repo-name>.git'
-                }
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
-            stage('Build') {
-                steps {
-                    sh 'javac Calculator.java'
-                }
+        }
+        stage('Build') {
+            steps {
+                bat 'javac Calculator.java'
             }
-            stage('Test') {
-                steps {
-                    // Add unit tests if available
-                }
+        }
+        stage('Test') {
+            steps {
+                // Add unit tests if available
             }
-            stage('Docker Build & Push') {
-                steps {
-                    script {
-                        dockerImage = docker.build("<your-dockerhub-username>/java-calculator")
-                        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials-id') {
-                            dockerImage.push()
-                        }
-                    }
-                }
+        }
+        stage('Docker Build & Push') {
+            steps {
+                bat 'docker build -t vinithreddybanda/calculator:latest .'
+                bat 'docker push vinithreddybanda/calculator:latest'
             }
         }
     }
+}
     ```
 4. **Configure DockerHub credentials** in Jenkins (`dockerhub-credentials-id`).
 

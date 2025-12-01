@@ -11,6 +11,11 @@ pipeline {
                 bat 'javac Calculator.java'
             }
         }
+        stage('Who Am I') {
+    steps {
+        bat 'whoami'
+    }
+}
         stage('Docker Build & Push') {
             steps {
                 bat 'docker build -t vinithreddybanda/calculator:latest .'

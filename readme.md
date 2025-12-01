@@ -76,6 +76,9 @@ public class Calculator {
     ```
     pipeline {
     agent any
+    environment {
+        DOCKERHUB_TOKEN = credentials('DOCKERHUB_TOKEN')
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -87,9 +90,9 @@ public class Calculator {
                 bat 'javac Calculator.java'
             }
         }
-        stage('Test') {
+        stage('Docker Login') {
             steps {
-                // Add unit tests if available
+                bat "docker login -u vinithreddybanda -p %DOCKERHUB_TOKEN%"
             }
         }
         stage('Docker Build & Push') {

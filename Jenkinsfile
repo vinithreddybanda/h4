@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKERHUB_TOKEN = credentials('DOCKERHUB_TOKEN')
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -11,11 +14,11 @@ pipeline {
                 bat 'javac Calculator.java'
             }
         }
-        stage('Who Am I') {
-    steps {
-        bat 'whoami'
-    }
-}
+        stage('Docker Login') {
+            steps {
+                bat "docker login -u vinithreddybanda -p %DOCKERHUB_TOKEN%"
+            }
+        }
         stage('Docker Build & Push') {
             steps {
                 bat 'docker build -t vinithreddybanda/calculator:latest .'

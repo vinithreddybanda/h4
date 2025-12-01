@@ -113,7 +113,7 @@ public class Calculator {
 ### Dockerfile Example
 ```dockerfile
 # Dockerfile
-FROM openjdk:8-jre-alpine
+FROM eclipse-temurin:23-jdk-alpine AS builder
 COPY Calculator.java /Calculator.java
 RUN javac Calculator.java
 CMD ["java", "Calculator"]

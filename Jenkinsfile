@@ -11,11 +11,6 @@ pipeline {
                 bat 'javac Calculator.java'
             }
         }
-        stage('Test') {
-            steps {
-                // Add unit tests if available
-            }
-        }
         stage('Docker Build & Push') {
             steps {
                 bat 'docker build -t vinithreddybanda/calculator:latest .'
